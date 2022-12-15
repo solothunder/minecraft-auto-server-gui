@@ -15,7 +15,7 @@ while True:
     event, values = window.read()
     if event == sg.WIN_CLOSED or event == '終了':
         break
-    elif event == 'OK':
+    elif event == '作成':
         print('あなたが入力した値： ', values[0])
 
 window.close()
