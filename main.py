@@ -1,21 +1,33 @@
 import PySimpleGUI as sg
+import server_add
+import server_control
+import os
+from els import els
 
-sg.theme('DarkAmber')   # デザインテーマの設定
+def main():
+    check_dir = els.check_file_dir("minecraft/", "false", "false")
+    if (check_dir == "error"):
+        os.mkdir("minecraft")
+    # ウィンドウに配置するコンポーネント
+    layout = [  [sg.Text('Minecraft-Auto-Server GUI',font=('Arial',20))],
+                [sg.Text('注意！このプログラムはβ版なので　不具合が発生する可能性があります')],
+                [sg.Text('作成か管理を選択してください')],
+                [sg.Button('作成'), sg.Button('管理'), sg.Button('終了')] ]
 
-# ウィンドウに配置するコンポーネント
-layout = [  [sg.Text('Minecraft-Auto-Server GUI',font=('Arial',20))],
-            [sg.Text('作成か管理を選択してください')],
-            [sg.Button('作成'), sg.Button('管理'), sg.Button('終了')] ]
+    # ウィンドウの生成
+    window = sg.Window('Minecraft-Auto-Server', layout)
 
-# ウィンドウの生成
-window = sg.Window('Minecraft-Auto-Server', layout)
+    # イベントループ
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED or event == '終了':
+            break
+        elif event == '作成':
+            server_add.main_run()
+        elif event == '管理':
+            server_control.main_run()
 
-# イベントループ
-while True:
-    event, values = window.read()
-    if event == sg.WIN_CLOSED or event == '終了':
-        break
-    elif event == '作成':
-        print('あなたが入力した値： ', values[0])
 
-window.close()
+    window.close()
+if __name__ == ("__main__"):
+    main()
