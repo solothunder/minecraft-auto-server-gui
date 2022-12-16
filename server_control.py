@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 import minecraft
 
 def main_run():
-
+    
     # ウィンドウに配置するコンポーネント
     layout = [  [sg.Text('管理（起動）',font=('Arial',20))],
                 [sg.Text('Xms(最小メモリ)を入力してください（G）※数字のみ：'), sg.InputText()],
@@ -19,7 +19,6 @@ def main_run():
             break
         elif event == '起動':
             minecraft.minecraft_exec(values[1],values[0])
-            print('あなたが入力した値： ', values[0])
 
 
     window.close()

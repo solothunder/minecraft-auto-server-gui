@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 import os
 from els import els
+import minecraft
 
 def main_run():
     check_dir = els.check_file_dir("minecraft/", "false", "false")
@@ -21,7 +22,10 @@ def main_run():
         if event == sg.WIN_CLOSED or event == '戻る':
             break
         elif event == '次へ':
-            print('あなたが入力した値： ', values[0])
+            minecraft.minecraft_download(values[0])
+            minecraft.minecraft_eula_edit()
+            minecraft.minecraft_port(values[1])
+            els.global_ip("False", "True")
 
 
     window.close()
