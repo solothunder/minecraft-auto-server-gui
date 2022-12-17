@@ -5,6 +5,12 @@ import os
 from els import els
 
 def main():
+    path = ["server_add.py", "server_control.py", "minecraft.py", "els/els.py", "advance_file/server.properties", "advance_file/eula.txt", "advance_file/minecraft_server_link.txt"]
+    for pathcount in path:
+        file_check = els.check_file_dir(pathcount, "False", "False")
+        if file_check == "error":
+            sg.popup("ファイルが見つからないため実行できません\n見つからないファイル:\n"+pathcount)
+
     check_dir = els.check_file_dir("minecraft/", "false", "false")
     if (check_dir == "error"):
         os.mkdir("minecraft")

@@ -3,6 +3,7 @@ import shutil
 import sys
 import subprocess
 import os
+from els import els
 import PySimpleGUI as sg
 #同意用プログラム
 def yes_no_input(anser):
@@ -17,7 +18,6 @@ def minecraft_download(minecraft_server_version):
     file_path = os.path.join(file_name)
     with open(file_path) as f:
         lines = f.readlines()
-    minecraft_server_version = input("どのバージョンにしますか？(例:1.19.2)：")
     # 入力情報に対してmatch caseで対応
     match minecraft_server_version:
         case "1.19.3": minecraft_server_link_lines = 0
@@ -28,30 +28,30 @@ def minecraft_download(minecraft_server_version):
         case _: 
             minecraft_server_link_lines = 0
             minecraft_server_version = "デフォルト 1.19.3"
-    print("PaperMC ダウンロード中 (V."+minecraft_server_version+")")
     save_name='minecraft/server.jar'
     urllib.request.urlretrieve(lines[minecraft_server_link_lines], save_name)
-    print("PaperMC ダウンロード完了")
 # 入れた情報がいいかどうか？
 def minecraft_install_yes_no(port):
     if not port:
         port = "25565(デフォルト)"
     else:
         pass
-    print("入力情報：\nサーバーメインポート：",port)
-    yes_no_input("これでよろしいでしょうか？（編集したい場合はプログラムを終了してもう一回設定してください。） yes か　no [y/n]：")
+    minecraft_input_info_yes_no = sg.popup_yes_no("これでよろしいでしょうか\n入力情報：\nサーバーメインポート：",port)
+    yes_no_input(minecraft_input_info_yes_no)
 # eula 同意（yes no あり）
 def minecraft_eula_edit():
-    eula_popup_text = sg.popup_yes_no("Minecraft EULA（使用許諾契約 / 利用許諾契約）に同意しますか？\nMinecraftのEULA は https://www.minecraft.net/ja-jp/terms/r3 こちらを参照してください。")
-    yes_no_input(eula_popup_text)
+    eula_popup_input = sg.popup_yes_no("Minecraft EULA（使用許諾契約 / 利用許諾契約）に同意しますか？\nMinecraftのEULA は https://www.minecraft.net/ja-jp/terms/r3 こちらを参照してください。")
+    yes_no_input(eula_popup_input)
     shutil.copyfile("advance_file/eula.txt", "minecraft/eula.txt")
-    print("同意しました。")
+    sg.popup("同意しました。")
 # minecraft 実行
 def minecraft_exec(xmx, xms):
-    print("サーバー起動")
+    exec_server_popup = sg.popup_yes_no("サーバー起動しますか？\n[Xms(最小メモリ):"+xms+"GB\nXmx(最大メモリ):"+xmx+"GB\n]")
+    if exec_server_popup == "No":
+        quit()
     cmd = "java -Xmx"+xmx+"G -Xms"+xms+"G -jar server.jar"
     subprocess.call(cmd, shell=True, cwd=r"minecraft/")
-    print("サーバー停止")
+    sg.popup("サーバー停止")
 # 行編集
 def replace_func(fname, replace_set):
     target, replace = replace_set
@@ -69,7 +69,6 @@ def replace_func(fname, replace_set):
             f2.write(tmp_list[i])
 
 def minecraft_port(port):
-    print("ポート設定中")
     if not port:
         port = "25565"
     else:
@@ -80,5 +79,3 @@ def minecraft_port(port):
     # call func
     replace_func(path, replace_setA)
     shutil.copyfile("advance_file/server.properties", "minecraft/server.properties")
-
-    print("ポート設定完了")
