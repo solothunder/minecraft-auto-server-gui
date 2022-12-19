@@ -13,6 +13,10 @@ def yes_no_input(anser):
         sys.exit()
 # papermc dl
 def minecraft_download(minecraft_server_version):
+    server_download_advance_check_ping = els.check_ping("google.com", "3", "False", "False")
+    if server_download_advance_check_ping == "error":
+        sg.popup("ネットワークがつながっていません\nダウンロードは行えません")
+        sys.exit()
     ### ファイル内の文字列を検索・抽出
     file_name = 'advance_file/minecraft_server_link.txt'
     file_path = os.path.join(file_name)

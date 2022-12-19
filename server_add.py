@@ -12,7 +12,7 @@ def minecraft_server_local_jar_file():
             minecraft_local_jar_path = sg.popup_get_file('jarファイルを指定してください\n例:server.jar', file_types=(("Java Archive", ".jar"),))
             if not minecraft_local_jar_path:
                 sg.popup("ファイルが選択されていません")
-                return False
+                return "no"
             minecraft_local_jar_check_file = els.check_file_dir(minecraft_local_jar_path, "False", "False")
             if minecraft_local_jar_check_file == "error":
                 sg.popup("ファイルが存在しません。")
@@ -31,7 +31,7 @@ def main_run():
                 [sg.Text("バージョンは自分がjarファイルを持っている場合には、入力する必要がありません")],
                 [sg.Text('バージョンを入力してください(デフォルトだと：1.19.3)'), sg.InputText()],
                 [sg.Text('ポートを入力してください(デフォルトだと：25565)'), sg.InputText()],
-                [sg.ProgressBar(BAR_MAX, orientation='h', size=(20, 20), key='-PROG-')],
+                [sg.Text("進捗："),sg.ProgressBar(BAR_MAX, orientation='h', size=(20, 20), key='-PROG-')],
                 [sg.Button('次へ'), sg.Button('戻る')] ]
 
     # ウィンドウの生成
@@ -44,9 +44,6 @@ def main_run():
             break
         elif event == '次へ':
             minecraft_server_local_jar_result = minecraft_server_local_jar_file()
-            if minecraft_server_local_jar_result == "no":
-                minecraft.minecraft_download(values[0])
-                window.find_element('-PROG-').update(70)
             minecraft.minecraft_install_yes_no(values[1], values[0], minecraft_server_local_jar_result)
             window.find_element('-PROG-').update(10)
             if minecraft_server_local_jar_result == "no":
