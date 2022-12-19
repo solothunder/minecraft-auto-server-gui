@@ -5,6 +5,7 @@ import os
 from els import els
 
 def main():
+    
     path = ["server_add.py", "server_control.py", "minecraft.py", "els/els.py", "advance_file/server.properties", "advance_file/eula.txt", "advance_file/minecraft_server_link.txt"]
     for pathcount in path:
         file_check = els.check_file_dir(pathcount, "False", "False")
@@ -16,7 +17,7 @@ def main():
         os.mkdir("minecraft")
     # ウィンドウに配置するコンポーネント
     layout = [  [sg.Text('Minecraft-Auto-Server GUI',font=('Arial',20))],
-                [sg.Text('注意！このプログラムはβ版なので　不具合が発生する可能性があります')],
+                [sg.Text('不具合が発生した場合はgithubのIssuesにお知らせください。')],
                 [sg.Text('作成か管理を選択してください')],
                 [sg.Button('作成'), sg.Button('管理'), sg.Button('終了')] ]
 

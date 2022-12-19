@@ -27,16 +27,21 @@ def minecraft_download(minecraft_server_version):
         case "1.8.9": minecraft_server_link_lines = 4
         case _: 
             minecraft_server_link_lines = 0
-            minecraft_server_version = "デフォルト 1.19.3"
     save_name='minecraft/server.jar'
     urllib.request.urlretrieve(lines[minecraft_server_link_lines], save_name)
 # 入れた情報がいいかどうか？
-def minecraft_install_yes_no(port):
+def minecraft_install_yes_no(port, version, minecraft_server_local_jar_result):
     if not port:
         port = "25565(デフォルト)"
     else:
         pass
-    minecraft_input_info_yes_no = sg.popup_yes_no("これでよろしいでしょうか\n入力情報：\nサーバーメインポート：",port)
+    if minecraft_server_local_jar_result == "no":
+        if not version:
+            version = "1.19.3(デフォルト)"
+    #jarファイルを自前で持っていた場合は?.?になる
+    else:
+        version = "?.?(ユーザー自前 jarファイル)"
+    minecraft_input_info_yes_no = sg.popup_yes_no("これでよろしいでしょうか\n入力情報：\nサーバーメインポート：",port,"\nバージョン：", version)
     yes_no_input(minecraft_input_info_yes_no)
 # eula 同意（yes no あり）
 def minecraft_eula_edit():
