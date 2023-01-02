@@ -1,6 +1,7 @@
 # minecraft-auto-server-gui
 
 Minecraftを自動的に作成するZero氏が作った[FastServer]のようなものをPythonで作りました
+
 テスト環境:
 OS{
 1.PC Windows(11)
