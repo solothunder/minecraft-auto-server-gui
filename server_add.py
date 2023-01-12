@@ -48,7 +48,6 @@ def main_run():
     # ウィンドウに配置するコンポーネント
     layout = [  [sg.Text('作成',font=('Arial',20))],
                 [sg.Text("バージョンは自分がjarファイルを持っている場合には、入力する必要がありません")],
-                [sg.Text("対応バージョン（ダウンロード）： 1.19.x 1.18.x 1.17.x 1.16.5")],
                 [sg.Text('バージョン(デフォルトだと：1.19.3)'), sg.InputText()],
                 [sg.Text('ポート(デフォルトだと：25565)'), sg.InputText()],
                 [sg.Text('名前(デフォルトだと：サーバー（未入力）)'), sg.InputText()],
@@ -112,9 +111,9 @@ def main_run():
             minecraft_server_list_txt_lines_count = sum([1 for _ in open('data/minecraft-list.txt')])
             if not minecraft_server_name:
                 minecraft_server_name = "サーバー（未入力）"
-            with open('data/minecraft-list.txt', 'a') as f:
+            with open('data/minecraft-list.txt', 'a', encoding="utf-8") as f:
                 print("NO："+str(minecraft_server_list_txt_lines_count + 1)+" ｜サーバー名："+minecraft_server_name+" ｜作成時間："+dt_now.strftime('%Y年%m月%d日 %H:%M:%S')[:-3]+" ｜サーバーバージョン（jar読み込みだとunknown）："+minecraft_server_version+" ｜ディレクトリ位置："+new_dir_path+"/", file=f)
-            with open('data/minecraft-dir-list.txt', 'a') as f:
+            with open('data/minecraft-dir-list.txt', 'a', encoding="utf-8") as f:
                 print(new_dir_path, file=f)
             window['-PROGRESS-'].update(f'txtファイル記述完了')
             # 終わり

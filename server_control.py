@@ -12,8 +12,8 @@ def main_run():
             sg.popup("必要なファイルが存在しません。")
             quit()
     # txtファイルの行数カウント
-    minecraft_server_list_txt_lines_count = sum([1 for _ in open('data/minecraft-list.txt')])
-    minecraft_server_dir_list_txt_lines_count = sum([1 for _ in open('data/minecraft-dir-list.txt')])
+    minecraft_server_list_txt_lines_count = sum([1 for _ in open('data/minecraft-list.txt', encoding="utf-8")])
+    minecraft_server_dir_list_txt_lines_count = sum([1 for _ in open('data/minecraft-dir-list.txt', encoding="utf-8")])
     # もし行数が一致しなければポップアップを出して終了させる
     if minecraft_server_dir_list_txt_lines_count == minecraft_server_list_txt_lines_count:
         pass
